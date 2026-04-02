@@ -564,9 +564,10 @@
 
         /* Node styles */
         .node { cursor: pointer; transition: opacity 0.2s; }
-        .node:hover { stroke: #1e293b; stroke-width: 2px; }
-        .node-group.selected .node { stroke: #1e293b; stroke-width: 3px; }
-        .node-group.dimmed { opacity: 0.1; }
+        .node:hover { opacity: 0.7; }
+        .node-group.selected .node { opacity: 1; text-decoration: underline; }
+        .node-group.dimmed { opacity: 0.08; }
+        .node-group:hover .node-hitarea { fill: rgba(0,0,0,0.04); rx: 4; }
 
         /* Tooltip */
         .tooltip {
@@ -748,14 +749,14 @@
                 </div>
                 <div class="zoom-hint">Scroll to zoom, drag to pan</div>
                 <div class="legend">
-                    <div class="legend-title">Action Color</div>
+                    <div class="legend-title">Action (text color)</div>
                     <div class="legend-item"><span class="legend-dot" style="background:#6da87a;"></span> Fund</div>
                     <div class="legend-item"><span class="legend-dot" style="background:#c4856c;"></span> Build</div>
                     <div class="legend-item"><span class="legend-dot" style="background:#7a9bb5;"></span> Research</div>
                     <div class="legend-item"><span class="legend-dot" style="background:#b589a0;"></span> Advocate</div>
                     <div class="legend-item"><span class="legend-dot" style="background:#9b8dbf;"></span> Convene</div>
                     <div class="legend-title" style="margin-top:8px;">Size</div>
-                    <div class="legend-item" style="font-size:10px;color:#64748b;">Composite score (d/acc + transformative)</div>
+                    <div class="legend-item" style="font-size:10px;color:#64748b;">Text size = composite score</div>
                 </div>
             </div>
             <div id="action-view"></div>
@@ -994,34 +995,43 @@
             d.y = d.targetY + (Math.random() - 0.5) * 20;
         });
 
-        // Compute node radius from composite score
+        // Measure text bounding boxes for collision
+        const tempSvg = d3.select('body').append('svg')
+            .style('position', 'absolute').style('visibility', 'hidden');
+
         scatterData.forEach(d => {
             const composite = d.composite || 15;
-            // Radius: 22px for lowest scores (~8), up to 38px for highest (~25)
-            d.r = 20 + (composite / 25) * 18;
-            d.fontSize = Math.round(8 + (composite / 25) * 3); // 8-11px
+            d.fontSize = Math.round(9 + (composite / 25) * 5); // 9-14px
 
-            // Pre-split name for labels
+            // Use the short name (first 3-4 words max)
             const words = d.name.split(/[\s\/\-:,]+/);
-            if (words.length <= 2) {
-                d.lines = [words.join(' ')];
-            } else if (words.length <= 4) {
-                d.lines = [words.slice(0, 2).join(' '), words.slice(2).join(' ')];
-            } else {
-                d.lines = [words.slice(0, 2).join(' '), words.slice(2, 4).join(' ')];
-            }
+            d.label = words.slice(0, 4).join(' ');
+            if (d.label.length > 28) d.label = d.label.slice(0, 27) + '…';
+
+            // Measure text width
+            const t = tempSvg.append('text')
+                .attr('font-size', d.fontSize + 'px')
+                .attr('font-family', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
+                .attr('font-weight', '600')
+                .text(d.label);
+            const bbox = t.node().getBBox();
+            d.bboxW = bbox.width + 6;  // small horizontal padding
+            d.bboxH = bbox.height + 2; // small vertical padding
+            d.r = Math.sqrt(d.bboxW * d.bboxW + d.bboxH * d.bboxH) / 2; // diagonal for circular collision approximation
+            t.remove();
         });
+        tempSvg.remove();
 
         const simulation = d3.forceSimulation(scatterData)
-            .force('x', d3.forceX(d => d.targetX).strength(0.3))
-            .force('y', d3.forceY(d => d.targetY).strength(0.3))
-            .force('collide', d3.forceCollide(d => d.r * 1.3 + 3).strength(0.9).iterations(8))
-            .force('charge', d3.forceManyBody().strength(-2))
+            .force('x', d3.forceX(d => d.targetX).strength(0.4))
+            .force('y', d3.forceY(d => d.targetY).strength(0.4))
+            .force('collide', d3.forceCollide(d => d.r + 1).strength(1.0).iterations(10))
+            .force('charge', d3.forceManyBody().strength(-1))
             .stop();
 
-        for (let i = 0; i < 400; i++) simulation.tick();
+        for (let i = 0; i < 500; i++) simulation.tick();
 
-        // Node groups (circle + label together)
+        // Node groups — text labels as the nodes
         const nodes = g.selectAll('.node-group')
             .data(scatterData)
             .join('g')
@@ -1035,40 +1045,25 @@
                 selectEntity(d.name);
             });
 
-        nodes.append('ellipse')
+        // Invisible hit area for easier clicking
+        nodes.append('rect')
+            .attr('x', d => -d.bboxW/2)
+            .attr('y', d => -d.bboxH/2 - 2)
+            .attr('width', d => d.bboxW)
+            .attr('height', d => d.bboxH + 4)
+            .attr('fill', 'transparent')
+            .attr('class', 'node-hitarea');
+
+        // Text label IS the node
+        nodes.append('text')
             .attr('class', 'node')
-            .attr('cx', 0)
-            .attr('cy', 0)
-            .attr('rx', d => d.r * 1.4)
-            .attr('ry', d => d.r)
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'central')
             .attr('fill', d => actionColors[d.action] || '#999')
-            .attr('stroke', '#ffffff')
-            .attr('stroke-width', 1.5)
-            .attr('opacity', 0.82);
-
-        // Name labels inside circles
-        nodes.each(function(d) {
-            const node = d3.select(this);
-            const text = node.append('text')
-                .attr('text-anchor', 'middle')
-                .attr('fill', '#ffffff')
-                .attr('font-size', d.fontSize + 'px')
-                .attr('font-weight', '500')
-                .attr('pointer-events', 'none');
-
-            const lineHeight = d.fontSize + 3;
-            const startY = -(d.lines.length - 1) * lineHeight / 2 + d.fontSize * 0.35;
-
-            d.lines.forEach((line, i) => {
-                // Truncate line to fit circle diameter
-                const maxChars = Math.floor((d.r * 2.2) / (d.fontSize * 0.55));
-                const truncated = line.length > maxChars ? line.slice(0, maxChars - 1) + '…' : line;
-                text.append('tspan')
-                    .attr('x', 0)
-                    .attr('y', startY + i * lineHeight)
-                    .text(truncated);
-            });
-        });
+            .attr('font-size', d => d.fontSize + 'px')
+            .attr('font-weight', '600')
+            .attr('style', 'paint-order: stroke; stroke: rgba(255,255,255,0.7); stroke-width: 3px; stroke-linejoin: round;')
+            .text(d => d.label);
     }
 
     // ---- Tooltip ----
