@@ -1002,7 +1002,7 @@
 
             // Pre-split name into lines that fit the bubble
             const words = d.name.split(/[\s\/\-:,]+/);
-            const maxCharsPerLine = Math.floor((d.r * 1.5) / (d.fontSize * 0.52));
+            const maxCharsPerLine = Math.floor((d.r * 2.0) / (d.fontSize * 0.52));
             const lines = [];
             let currentLine = '';
             for (const word of words) {
@@ -1029,7 +1029,7 @@
         const simulation = d3.forceSimulation(scatterData)
             .force('x', d3.forceX(d => d.targetX).strength(0.35))
             .force('y', d3.forceY(d => d.targetY).strength(0.35))
-            .force('collide', d3.forceCollide(d => d.r + 2).strength(0.9).iterations(10))
+            .force('collide', d3.forceCollide(d => d.r * 1.2 + 2).strength(0.9).iterations(10))
             .force('charge', d3.forceManyBody().strength(-2))
             .stop();
 
@@ -1049,12 +1049,13 @@
                 selectEntity(d.name);
             });
 
-        // Colored bubble
-        nodes.append('circle')
+        // Colored bubble (elongated)
+        nodes.append('ellipse')
             .attr('class', 'node')
             .attr('cx', 0)
             .attr('cy', 0)
-            .attr('r', d => d.r)
+            .attr('rx', d => d.r * 1.35)
+            .attr('ry', d => d.r * 0.85)
             .attr('fill', d => actionColors[d.action] || '#999')
             .attr('stroke', '#ffffff')
             .attr('stroke-width', 1.5)
