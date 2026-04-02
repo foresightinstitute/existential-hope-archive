@@ -17,9 +17,9 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+            background: linear-gradient(135deg, #ccfbf1 0%, #f0fdfa 100%);
             padding: 14px 24px;
-            border-bottom: 2px solid #cbd5e1;
+            border-bottom: 2px solid #99f6e4;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -34,7 +34,7 @@
         h1 {
             font-size: 22px;
             font-weight: 600;
-            color: #1e40af;
+            color: #115e59;
         }
 
         .view-toggle {
@@ -46,7 +46,8 @@
         }
 
         .view-toggle button {
-            padding: 6px 14px;
+            padding: 10px 18px;
+            min-height: 44px;
             background: none;
             border: none;
             border-radius: 4px;
@@ -57,7 +58,7 @@
         }
 
         .view-toggle button.active {
-            background: #2563eb;
+            background: #0d9488;
             color: #fff;
         }
 
@@ -73,7 +74,7 @@
         }
 
         .stat { display: flex; align-items: center; gap: 4px; }
-        .stat strong { color: #2563eb; }
+        .stat strong { color: #0d9488; }
 
         /* Container */
         .container {
@@ -83,7 +84,8 @@
 
         /* Left panel: filters */
         #filter-panel {
-            width: 260px;
+            width: 300px;
+            min-width: 300px;
             background: #ffffff;
             border-right: 2px solid #e2e8f0;
             display: flex;
@@ -92,12 +94,12 @@
         }
 
         .filter-section {
-            padding: 12px 14px;
+            padding: 14px 18px;
             border-bottom: 1px solid #e2e8f0;
         }
 
         .filter-section-title {
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 600;
             color: #475569;
             text-transform: uppercase;
@@ -108,18 +110,19 @@
         .filter-checkbox {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 3px 0;
-            font-size: 12px;
+            gap: 8px;
+            padding: 10px 0;
+            min-height: 44px;
+            font-size: 14px;
             color: #334155;
             cursor: pointer;
         }
 
-        .filter-checkbox input { cursor: pointer; accent-color: #2563eb; }
+        .filter-checkbox input { cursor: pointer; accent-color: #0d9488; width: 20px; height: 20px; }
 
         .filter-dot {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
         }
@@ -135,7 +138,7 @@
             color: #1e293b;
             font-size: 13px;
         }
-        #search:focus { outline: none; border-color: #2563eb; }
+        #search:focus { outline: none; border-color: #0d9488; }
 
         .select-all-row {
             display: flex;
@@ -143,12 +146,13 @@
             margin-bottom: 6px;
         }
         .select-all-btn {
-            font-size: 11px;
-            color: #2563eb;
+            font-size: 13px;
+            color: #0d9488;
             cursor: pointer;
             background: none;
             border: none;
-            padding: 0;
+            padding: 10px 4px;
+            min-height: 44px;
         }
         .select-all-btn:hover { text-decoration: underline; }
 
@@ -245,8 +249,8 @@
         }
 
         .zoom-btn {
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
             background: #ffffff;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
@@ -259,7 +263,7 @@
             transition: all 0.2s;
         }
 
-        .zoom-btn:hover { background: #e2e8f0; border-color: #2563eb; }
+        .zoom-btn:hover { background: #e2e8f0; border-color: #0d9488; }
 
         .zoom-hint {
             position: absolute;
@@ -320,12 +324,18 @@
 
         /* Detail panel */
         #detail-panel {
-            width: 420px;
+            position: fixed;
+            right: 0;
+            top: 56px;
+            height: calc(100vh - 56px);
+            width: 480px;
             background: #ffffff;
             border-left: 2px solid #e2e8f0;
             overflow-y: auto;
             padding: 24px;
             display: none;
+            z-index: 300;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
         }
 
         #detail-panel.open { display: block; }
@@ -352,7 +362,7 @@
         }
 
         .detail-group {
-            font-size: 12px;
+            font-size: 14px;
             color: #475569;
             margin-bottom: 4px;
         }
@@ -367,7 +377,7 @@
         .badge {
             padding: 3px 8px;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 500;
         }
 
@@ -389,7 +399,7 @@
         }
 
         .score-label {
-            font-size: 10px;
+            font-size: 12px;
             color: #475569;
             margin-bottom: 2px;
             text-transform: uppercase;
@@ -405,16 +415,16 @@
         }
 
         .section-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            color: #2563eb;
+            color: #0d9488;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .section-content {
-            font-size: 13px;
+            font-size: 14px;
             line-height: 1.6;
             color: #334155;
         }
@@ -465,11 +475,11 @@
         .org-item:last-child { border-bottom: none; }
 
         .org-name {
-            color: #2563eb;
+            color: #0d9488;
             font-weight: 500;
         }
 
-        .org-name a { color: #2563eb; text-decoration: none; }
+        .org-name a { color: #0d9488; text-decoration: none; }
         .org-name a:hover { text-decoration: underline; }
 
         .org-role { color: #64748b; }
@@ -477,7 +487,7 @@
         /* Source quote */
         .source-quote {
             background: #f1f5f9;
-            border-left: 3px solid #2563eb;
+            border-left: 3px solid #0d9488;
             padding: 10px 14px;
             border-radius: 0 6px 6px 0;
             font-size: 12px;
@@ -544,7 +554,7 @@
         .modal-close:hover { background: #f1f5f9; color: #1e293b; }
 
         .modal h2 { font-size: 22px; color: #1e293b; margin-bottom: 16px; }
-        .modal h3 { font-size: 16px; color: #2563eb; margin: 16px 0 8px; }
+        .modal h3 { font-size: 16px; color: #0d9488; margin: 16px 0 8px; }
         .modal p { font-size: 14px; line-height: 1.6; color: #334155; margin-bottom: 10px; }
         .modal ul { margin-left: 20px; margin-bottom: 10px; }
         .modal li { font-size: 13px; line-height: 1.6; color: #334155; margin-bottom: 4px; }
@@ -555,8 +565,8 @@
         /* Node styles */
         .node { cursor: pointer; transition: opacity 0.2s; }
         .node:hover { stroke: #1e293b; stroke-width: 2px; }
-        .node.selected { stroke: #1e293b; stroke-width: 3px; }
-        .node.dimmed { opacity: 0.1; }
+        .node-group.selected .node { stroke: #1e293b; stroke-width: 3px; }
+        .node-group.dimmed { opacity: 0.1; }
 
         /* Tooltip */
         .tooltip {
@@ -598,7 +608,8 @@
         }
 
         .info-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
+            min-height: 44px;
             background: #ffffff;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
@@ -607,16 +618,73 @@
             font-size: 12px;
             transition: all 0.2s;
         }
-        .info-btn:hover { background: #f1f5f9; color: #1e293b; }
+        .info-btn:hover { background: #f0fdfa; color: #0d9488; }
+
+        /* Filter toggle button - hidden by default */
+        .filter-toggle {
+            display: none;
+            align-items: center;
+            padding: 8px 14px;
+            min-height: 44px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            color: #475569;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .filter-toggle:hover { background: #f0fdfa; color: #0d9488; }
+
+        /* Responsive: tablet / small desktop */
+        @media (max-width: 1200px) {
+            #filter-panel { width: 220px; min-width: 220px; }
+            #detail-panel { width: 380px; }
+        }
+
+        /* Responsive: small screens */
+        @media (max-width: 900px) {
+            .filter-toggle { display: inline-flex; }
+
+            #filter-panel {
+                position: fixed;
+                left: 0;
+                top: 56px;
+                height: calc(100vh - 56px);
+                z-index: 250;
+                width: 300px;
+                min-width: 300px;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            #filter-panel.filter-panel-open {
+                transform: translateX(0);
+            }
+
+            .stats-bar { display: none; }
+
+            #detail-panel { width: 100vw; }
+        }
+
+        /* Responsive: phone */
+        @media (max-width: 600px) {
+            .action-cards { grid-template-columns: 1fr; }
+            h1 { font-size: 16px; }
+            .header { padding: 10px 14px; }
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-left">
+            <button class="filter-toggle" onclick="document.getElementById('filter-panel').classList.toggle('filter-panel-open')">Filters</button>
             <h1>Hyper-Entities v3</h1>
             <div class="view-toggle">
-                <button class="active" onclick="switchView('scatter')">Scatter Plot</button>
-                <button onclick="switchView('action')">What Can I Do?</button>
+                <button onclick="switchView('scatter')">Scatter Plot</button>
+                <button class="active" onclick="switchView('action')">What Can I Do?</button>
             </div>
         </div>
         <div class="stats-bar">
@@ -778,7 +846,7 @@
     allEntities.forEach(e => { entityByName[e.name] = e; });
 
     // State
-    let currentView = 'scatter';
+    let currentView = 'action';
     let selectedEntity = null;
     let svg, g, xScale, yScale, zoom;
 
@@ -786,6 +854,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         initScatter();
         applyFilters();
+        switchView('action');
     });
 
     // ---- View switching ----
@@ -858,8 +927,7 @@
 
         // Update scatter dots and labels
         if (svg) {
-            svg.selectAll('.node').classed('dimmed', d => !filtered.has(d.name));
-            svg.selectAll('.node-label').classed('dimmed', d => !filtered.has(d.name));
+            svg.selectAll('.node-group').classed('dimmed', d => !filtered.has(d.name));
         }
 
         // Update action view if visible
@@ -890,7 +958,7 @@
             .on('zoom', (event) => {
                 g.attr('transform', event.transform);
                 const k = event.transform.k;
-                g.selectAll('.node-label').attr('opacity', k > 1.5 ? 0.9 : 0);
+                // Labels always visible inside dots
             });
         svg.call(zoom);
 
@@ -942,35 +1010,29 @@
 
         // Force simulation for organic layout
         scatterData.forEach(d => {
-            d.r = 8 + (d.dacc_total / 20) * 8;
+            d.r = Math.max(30, 26 + (d.dacc_total / 20) * 16);
             d.targetX = xScale(d.dacc_total);
             d.targetY = yScale(d.transformative);
-            d.x = d.targetX + (Math.random() - 0.5) * 30;
-            d.y = d.targetY + (Math.random() - 0.5) * 20;
+            d.x = d.targetX + (Math.random() - 0.5) * 40;
+            d.y = d.targetY + (Math.random() - 0.5) * 30;
         });
 
         const simulation = d3.forceSimulation(scatterData)
-            .force('x', d3.forceX(d => d.targetX).strength(0.3))
-            .force('y', d3.forceY(d => d.targetY).strength(0.3))
-            .force('collide', d3.forceCollide(d => d.r + 2).strength(0.6).iterations(4))
-            .force('charge', d3.forceManyBody().strength(-2))
+            .force('x', d3.forceX(d => d.targetX).strength(0.25))
+            .force('y', d3.forceY(d => d.targetY).strength(0.25))
+            .force('collide', d3.forceCollide(d => d.r + 2).strength(0.8).iterations(6))
+            .force('charge', d3.forceManyBody().strength(-3))
             .stop();
 
-        for (let i = 0; i < 300; i++) simulation.tick();
+        for (let i = 0; i < 400; i++) simulation.tick();
 
-        // Dots
-        g.selectAll('.node')
+        // Node groups (circle + label together)
+        const nodes = g.selectAll('.node-group')
             .data(scatterData)
-            .join('circle')
-            .attr('class', 'node')
-            .attr('cx', d => d.x)
-            .attr('cy', d => d.y)
-            .attr('r', d => d.r)
-            .attr('fill', d => bottleneckColors[d.bottleneck] || '#888')
-            .attr('stroke', '#ffffff')
-            .attr('stroke-width', 1)
-            .attr('opacity', 0.8)
-            .style('pointer-events', 'all')
+            .join('g')
+            .attr('class', 'node-group')
+            .attr('transform', d => `translate(${d.x},${d.y})`)
+            .style('cursor', 'pointer')
             .on('mouseover', showTooltip)
             .on('mousemove', moveTooltip)
             .on('mouseout', hideTooltip)
@@ -978,18 +1040,49 @@
                 selectEntity(d.name);
             });
 
-        // Labels (visible only when zoomed in)
-        g.selectAll('.node-label')
-            .data(scatterData)
-            .join('text')
-            .attr('class', 'node-label')
-            .attr('x', d => d.x + d.r + 3)
-            .attr('y', d => d.y + 3)
-            .attr('fill', '#334155')
-            .attr('font-size', '10px')
-            .attr('pointer-events', 'none')
-            .attr('opacity', 0)
-            .text(d => d.name);
+        nodes.append('circle')
+            .attr('class', 'node')
+            .attr('cx', 0)
+            .attr('cy', 0)
+            .attr('r', d => d.r)
+            .attr('fill', d => bottleneckColors[d.bottleneck] || '#888')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 1.5)
+            .attr('opacity', 0.85);
+
+        // Name labels inside dots — max 2 words
+        nodes.each(function(d) {
+            const node = d3.select(this);
+            const words = d.name.split(/[\s\/\-:,]+/);
+            // Take first 1-2 words
+            let lines;
+            if (words.length === 1) {
+                lines = [words[0]];
+            } else {
+                lines = [words[0], words[1]];
+            }
+
+            const fontSize = Math.min(11, d.r * 0.38);
+            const lineHeight = fontSize * 1.25;
+            const totalHeight = lines.length * lineHeight;
+            const startY = -totalHeight / 2 + lineHeight * 0.7;
+
+            const text = node.append('text')
+                .attr('class', 'node-label')
+                .attr('text-anchor', 'middle')
+                .attr('fill', '#fff')
+                .attr('font-size', fontSize + 'px')
+                .attr('font-weight', '500')
+                .attr('pointer-events', 'none')
+                .style('text-shadow', '0 1px 2px rgba(0,0,0,0.4)');
+
+            lines.forEach((line, i) => {
+                text.append('tspan')
+                    .attr('x', 0)
+                    .attr('y', startY + i * lineHeight)
+                    .text(line);
+            });
+        });
     }
 
     // ---- Tooltip ----
@@ -1044,7 +1137,7 @@
         if (!entity) return;
 
         // Highlight on scatter
-        svg.selectAll('.node')
+        svg.selectAll('.node-group')
             .classed('selected', d => d.name === name);
 
         // Open detail panel
@@ -1056,7 +1149,7 @@
     function closeDetail() {
         document.getElementById('detail-panel').classList.remove('open');
         selectedEntity = null;
-        svg.selectAll('.node').classed('selected', false);
+        svg.selectAll('.node-group').classed('selected', false);
     }
 
     function renderDetail(e) {
@@ -1086,7 +1179,7 @@
                 <div class="detail-section">
                     <div class="section-title">Source Quote</div>
                     <div class="source-quote">${e.source_quote}</div>
-                    ${e.source_url ? `<div style="margin-top:6px;font-size:11px;"><a href="${e.source_url}" target="_blank" style="color:#2563eb;">View source</a></div>` : ''}
+                    ${e.source_url ? `<div style="margin-top:6px;font-size:11px;"><a href="${e.source_url}" target="_blank" style="color:#0d9488;">View source</a></div>` : ''}
                 </div>
             `;
         }
@@ -1096,7 +1189,7 @@
         if (research.key_publications && research.key_publications.length > 0) {
             pubsHtml = '<div class="detail-section"><div class="section-title">Key Publications</div>';
             research.key_publications.forEach(pub => {
-                const link = pub.url ? `<a href="${pub.url}" target="_blank" style="color:#2563eb;text-decoration:none;">${pub.title}</a>` : pub.title;
+                const link = pub.url ? `<a href="${pub.url}" target="_blank" style="color:#0d9488;text-decoration:none;">${pub.title}</a>` : pub.title;
                 pubsHtml += `<div style="font-size:12px;color:#334155;padding:4px 0;border-bottom:1px solid #e2e8f0;">${link} <span style="color:#64748b;">(${pub.date || ''})</span></div>`;
             });
             pubsHtml += '</div>';
@@ -1118,7 +1211,7 @@
                 <div class="score-box"><div class="score-label">d/acc Total</div><div class="score-value" style="color:#34d399;">${dacc.total || 0}/20</div></div>
                 <div class="score-box"><div class="score-label">Transformative</div><div class="score-value" style="color:#a78bfa;">${trans.score || 0}/5</div></div>
                 <div class="score-box"><div class="score-label">TRL</div><div class="score-value" style="color:#f59e0b;">${research.trl || '?'}</div></div>
-                <div class="score-box"><div class="score-label">Composite</div><div class="score-value" style="color:#2563eb;">${e.scores?.composite || 0}</div></div>
+                <div class="score-box"><div class="score-label">Composite</div><div class="score-value" style="color:#0d9488;">${e.scores?.composite || 0}</div></div>
             </div>
 
             <div class="detail-section">
