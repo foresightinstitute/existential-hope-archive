@@ -994,47 +994,34 @@
             d.y = d.targetY + (Math.random() - 0.5) * 20;
         });
 
-        // Compute node dimensions based on text + composite score
-        const tempSvg = d3.select('body').append('svg').style('visibility','hidden');
+        // Compute node radius from composite score
         scatterData.forEach(d => {
-            const words = d.name.split(/[\s\/\-:,]+/);
-            const lines = words.length <= 2 ? [words.join(' ')] :
-                          [words.slice(0, Math.ceil(words.length/2)).join(' '),
-                           words.slice(Math.ceil(words.length/2)).join(' ')];
-            d.lines = lines;
-
-            // Size factor from composite score (range roughly 8-25)
             const composite = d.composite || 15;
-            const sizeFactor = 0.8 + (composite / 25) * 0.4; // 0.8 to 1.2
+            // Radius: 22px for lowest scores (~8), up to 38px for highest (~25)
+            d.r = 20 + (composite / 25) * 18;
+            d.fontSize = Math.round(8 + (composite / 25) * 3); // 8-11px
 
-            // Measure text
-            const fontSize = Math.round(11 * sizeFactor);
-            d.fontSize = fontSize;
-            let maxLineWidth = 0;
-            lines.forEach(line => {
-                const t = tempSvg.append('text').attr('font-size', fontSize + 'px').attr('font-family', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif').text(line);
-                const w = t.node().getComputedTextLength();
-                if (w > maxLineWidth) maxLineWidth = w;
-                t.remove();
-            });
-
-            d.w = Math.max(50, maxLineWidth + 16) * sizeFactor;
-            d.h = Math.max(28, (lines.length * (fontSize + 4) + 12)) * sizeFactor;
-            // For collision, use the larger dimension
-            d.r = Math.max(d.w, d.h) / 2 + 2;
+            // Pre-split name for labels
+            const words = d.name.split(/[\s\/\-:,]+/);
+            if (words.length <= 2) {
+                d.lines = [words.join(' ')];
+            } else if (words.length <= 4) {
+                d.lines = [words.slice(0, 2).join(' '), words.slice(2).join(' ')];
+            } else {
+                d.lines = [words.slice(0, 2).join(' '), words.slice(2, 4).join(' ')];
+            }
         });
-        tempSvg.remove();
 
         const simulation = d3.forceSimulation(scatterData)
             .force('x', d3.forceX(d => d.targetX).strength(0.3))
             .force('y', d3.forceY(d => d.targetY).strength(0.3))
-            .force('collide', d3.forceCollide(d => d.r + 2).strength(0.9).iterations(8))
+            .force('collide', d3.forceCollide(d => d.r + 3).strength(0.9).iterations(8))
             .force('charge', d3.forceManyBody().strength(-2))
             .stop();
 
         for (let i = 0; i < 400; i++) simulation.tick();
 
-        // Node groups (rect + label together)
+        // Node groups (circle + label together)
         const nodes = g.selectAll('.node-group')
             .data(scatterData)
             .join('g')
@@ -1048,20 +1035,17 @@
                 selectEntity(d.name);
             });
 
-        nodes.append('rect')
+        nodes.append('circle')
             .attr('class', 'node')
-            .attr('x', d => -d.w/2)
-            .attr('y', d => -d.h/2)
-            .attr('width', d => d.w)
-            .attr('height', d => d.h)
-            .attr('rx', 8)
-            .attr('ry', 8)
+            .attr('cx', 0)
+            .attr('cy', 0)
+            .attr('r', d => d.r)
             .attr('fill', d => actionColors[d.action] || '#999')
             .attr('stroke', '#ffffff')
             .attr('stroke-width', 1.5)
-            .attr('opacity', 0.8);
+            .attr('opacity', 0.82);
 
-        // Name labels inside rectangles
+        // Name labels inside circles
         nodes.each(function(d) {
             const node = d3.select(this);
             const text = node.append('text')
@@ -1071,14 +1055,17 @@
                 .attr('font-weight', '500')
                 .attr('pointer-events', 'none');
 
-            const lineHeight = d.fontSize + 4;
+            const lineHeight = d.fontSize + 3;
             const startY = -(d.lines.length - 1) * lineHeight / 2 + d.fontSize * 0.35;
 
             d.lines.forEach((line, i) => {
+                // Truncate line to fit circle diameter
+                const maxChars = Math.floor((d.r * 1.6) / (d.fontSize * 0.55));
+                const truncated = line.length > maxChars ? line.slice(0, maxChars - 1) + '…' : line;
                 text.append('tspan')
                     .attr('x', 0)
                     .attr('y', startY + i * lineHeight)
-                    .text(line);
+                    .text(truncated);
             });
         });
     }
