@@ -564,10 +564,9 @@
 
         /* Node styles */
         .node { cursor: pointer; transition: opacity 0.2s; }
-        .node:hover { opacity: 0.7; }
-        .node-group.selected .node { opacity: 1; text-decoration: underline; }
+        .node:hover { stroke: #1e293b; stroke-width: 2.5px; }
+        .node-group.selected .node { stroke: #1e293b; stroke-width: 3px; }
         .node-group.dimmed { opacity: 0.08; }
-        .node-group:hover .node-hitarea { fill: rgba(0,0,0,0.04); rx: 4; }
 
         /* Tooltip */
         .tooltip {
@@ -995,43 +994,48 @@
             d.y = d.targetY + (Math.random() - 0.5) * 20;
         });
 
-        // Measure text bounding boxes for collision
-        const tempSvg = d3.select('body').append('svg')
-            .style('position', 'absolute').style('visibility', 'hidden');
-
+        // Compute bubble sizes from composite score — bigger than before
         scatterData.forEach(d => {
             const composite = d.composite || 15;
-            d.fontSize = Math.round(11 + (composite / 25) * 5); // 11-16px
+            d.r = 28 + (composite / 25) * 22; // 28-50px radius
+            d.fontSize = Math.round(9 + (composite / 25) * 4); // 9-13px
 
-            // Use the short name (first 3-4 words max)
+            // Pre-split name into lines that fit the bubble
             const words = d.name.split(/[\s\/\-:,]+/);
-            d.label = words.slice(0, 4).join(' ');
-            if (d.label.length > 28) d.label = d.label.slice(0, 27) + '…';
-
-            // Measure text width
-            const t = tempSvg.append('text')
-                .attr('font-size', d.fontSize + 'px')
-                .attr('font-family', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
-                .attr('font-weight', '600')
-                .text(d.label);
-            const bbox = t.node().getBBox();
-            d.bboxW = bbox.width + 6;  // small horizontal padding
-            d.bboxH = bbox.height + 2; // small vertical padding
-            d.r = Math.sqrt(d.bboxW * d.bboxW + d.bboxH * d.bboxH) / 2; // diagonal for circular collision approximation
-            t.remove();
+            const maxCharsPerLine = Math.floor((d.r * 1.5) / (d.fontSize * 0.52));
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                const test = currentLine ? currentLine + ' ' + word : word;
+                if (test.length > maxCharsPerLine && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                    if (lines.length >= 3) break; // max 3 lines
+                } else {
+                    currentLine = test;
+                }
+            }
+            if (currentLine && lines.length < 3) lines.push(currentLine);
+            // Truncate last line if needed
+            if (lines.length > 0) {
+                const last = lines[lines.length - 1];
+                if (last.length > maxCharsPerLine) {
+                    lines[lines.length - 1] = last.slice(0, maxCharsPerLine - 1) + '…';
+                }
+            }
+            d.lines = lines;
         });
-        tempSvg.remove();
 
         const simulation = d3.forceSimulation(scatterData)
-            .force('x', d3.forceX(d => d.targetX).strength(0.4))
-            .force('y', d3.forceY(d => d.targetY).strength(0.4))
-            .force('collide', d3.forceCollide(d => d.r + 1).strength(1.0).iterations(10))
-            .force('charge', d3.forceManyBody().strength(-1))
+            .force('x', d3.forceX(d => d.targetX).strength(0.35))
+            .force('y', d3.forceY(d => d.targetY).strength(0.35))
+            .force('collide', d3.forceCollide(d => d.r + 2).strength(0.9).iterations(10))
+            .force('charge', d3.forceManyBody().strength(-2))
             .stop();
 
         for (let i = 0; i < 500; i++) simulation.tick();
 
-        // Node groups — text labels as the nodes
+        // Node groups — colored bubbles with text inside
         const nodes = g.selectAll('.node-group')
             .data(scatterData)
             .join('g')
@@ -1045,28 +1049,37 @@
                 selectEntity(d.name);
             });
 
-        // Background pill for readability
-        nodes.append('rect')
-            .attr('class', 'node-hitarea')
-            .attr('x', d => -d.bboxW/2 - 4)
-            .attr('y', d => -d.bboxH/2 - 2)
-            .attr('width', d => d.bboxW + 8)
-            .attr('height', d => d.bboxH + 4)
-            .attr('rx', 4)
-            .attr('ry', 4)
-            .attr('fill', d => actionColors[d.action] || '#999')
-            .attr('opacity', 0.12);
-
-        // Text label IS the node
-        nodes.append('text')
+        // Colored bubble
+        nodes.append('circle')
             .attr('class', 'node')
-            .attr('text-anchor', 'middle')
-            .attr('dominant-baseline', 'central')
+            .attr('cx', 0)
+            .attr('cy', 0)
+            .attr('r', d => d.r)
             .attr('fill', d => actionColors[d.action] || '#999')
-            .attr('font-size', d => d.fontSize + 'px')
-            .attr('font-weight', '700')
-            .attr('style', 'paint-order: stroke; stroke: rgba(255,255,255,0.9); stroke-width: 4px; stroke-linejoin: round;')
-            .text(d => d.label);
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 1.5)
+            .attr('opacity', 0.82);
+
+        // White text inside bubble — multi-line word wrap
+        nodes.each(function(d) {
+            const node = d3.select(this);
+            const text = node.append('text')
+                .attr('text-anchor', 'middle')
+                .attr('fill', '#ffffff')
+                .attr('font-size', d.fontSize + 'px')
+                .attr('font-weight', '600')
+                .attr('pointer-events', 'none');
+
+            const lineHeight = d.fontSize + 3;
+            const startY = -(d.lines.length - 1) * lineHeight / 2 + d.fontSize * 0.35;
+
+            d.lines.forEach((line, i) => {
+                text.append('tspan')
+                    .attr('x', 0)
+                    .attr('y', startY + i * lineHeight)
+                    .text(line);
+            });
+        });
     }
 
     // ---- Tooltip ----
