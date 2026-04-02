@@ -1,6 +1,6 @@
 # Hyper-Entities: Extracting Future Systems from the Existential Hope Archive
 
-This example demonstrates an LLM-powered pipeline that identifies and scores "hyper-entities" — future technologies, institutions, and coordination systems that don't yet exist but are already reorganizing investment, research, and narrative around their anticipated emergence. The term was coined by Michael Nielsen.
+Which technologies could help build the best possible future but aren't getting the attention they deserve? This pipeline scans 490,000 words of expert thinking on positive futures to find out. It identifies and scores "hyper-entities" — technologies, institutions, and coordination systems that don't fully exist yet but are already attracting funding, talent, and attention (a term coined by Michael Nielsen).
 
 ## Results
 
@@ -11,7 +11,7 @@ This example demonstrates an LLM-powered pipeline that identifies and scores "hy
 
 ## Explore
 
-**Interactive dashboard:** Open `dashboard/index.html` in a browser. Features scatter plot visualization (d/acc alignment vs. transformative potential), filtering by group/bottleneck/action type, and detailed entity cards.
+**[Interactive dashboard](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/index-labeled.html)** — Scatter plot visualization (d/acc alignment vs. transformative potential), filtering by group and action type, and detailed entity cards.
 
 **Scored dataset:** `data/curated.json` contains all 189 entities with full scoring, research data, and tier assignments.
 

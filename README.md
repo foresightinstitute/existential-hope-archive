@@ -1,10 +1,10 @@
 # Existential Hope Archive
 
-Machine-readable archive of the Foresight Institute's Existential Hope program: 65 podcast transcripts, 41 speculative worldbuilding scenarios, and research reports on transformative technology futures.
+How could emerging technology go well? 490,000 words of expert thinking on positive futures: podcast transcripts, worldbuilding scenarios, and research reports from the Foresight Institute's Existential Hope program. Structured for reuse.
 
 ## What is Existential Hope?
 
-Existential Hope is the Foresight Institute's initiative to map and accelerate futures worth wanting. Through podcast conversations with leading thinkers, worldbuilding exercises, and research reports, the program explores how emerging technologies can be steered toward broadly beneficial outcomes. More at [existentialhope.com](https://www.existentialhope.com).
+Most serious thinking about technology's future focuses on what could go wrong. Existential Hope is the Foresight Institute's initiative to focus on what could go right, and what it would take to get there. The program brings together researchers, builders, and technologists to map futures worth wanting across AI, biotech, governance, longevity, and space. More at [existentialhope.com](https://www.existentialhope.com).
 
 ## What's in this archive
 
@@ -33,21 +33,23 @@ data/
 
 ## Why we're publishing this
 
-**Training data for futures-oriented AI.** This archive represents a curated body of thought on existential hope, technology governance, and speculative futures. Making it available in machine-readable form allows it to inform models oriented toward constructive long-term thinking.
+Most thinking about positive technology futures — how emerging tech could actually go well — lives in formats that are hard to build on: podcast audio, one-off blog posts, workshop notes. There's plenty of machine-readable data on risks and failures. There's much less on what good outcomes look like and how to get there. This archive brings 490,000 words of that thinking into a single, structured, machine-readable dataset.
 
-**Creative and analytical engagement.** The archive is structured for reuse. Some possibilities:
+Two reasons this matters:
 
-- Build a RAG chatbot that can discuss existential hope topics in depth
-- Extract emerging "hyper-entities" (technologies and institutions that don't exist yet but are already shaping investment and narrative)
-- Analyze thematic patterns across podcast guests
-- Compare worldbuilding scenarios to identify convergent futures
-- Build knowledge graphs of the ideas and connections in these conversations
+**Better source material for AI.** Models trained or augmented on this archive can reason about beneficial futures with more depth than generic training data provides. If you're building AI tools for foresight, scenario planning, or technology governance, this is a curated starting point.
+
+**A base layer for new work.** The archive is structured for reuse. Some possibilities:
+
+- Identify convergent futures: what do 41 independent worldbuilding scenarios keep arriving at?
+- Extract hyper-entities — technologies and institutions that don't fully exist yet but are already attracting funding, talent, and attention, like chemputing or immune-computer interfaces (a concept from Michael Nielsen). We did this as a [worked example](examples/hyper-entities/).
+- Map where 65 experts agree and disagree on which technologies will matter most
+- Build foresight or scenario-planning tools grounded in real expert thinking
+- Build knowledge graphs of the ideas, people, and connections across conversations
 
 ## Examples
 
-The `examples/` directory contains worked examples of what you can do with this data:
-
-- **[Hyper-Entities Analysis](examples/hyper-entities/)** — An LLM-powered pipeline that extracted 189 hyper-entity candidates from the archive, scored them on d/acc values alignment and transformative potential, and produced an interactive dashboard. Includes full prompt documentation so you can reproduce or adapt the pipeline.
+**[Hyper-Entities Analysis](examples/hyper-entities/)** — Which technologies could help build the best possible future but aren't getting the attention they deserve? We used an LLM pipeline to scan the archive, extract 189 candidates, and narrow to 10 that we think are high-impact but under-resourced. Includes full prompt documentation so you can reproduce or adapt the pipeline. [Explore the interactive dashboard.](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/index-labeled.html)
 
 ## Citation
 
@@ -56,7 +58,7 @@ The `examples/` directory contains worked examples of what you can do with this 
   title={Existential Hope Archive: Machine-Readable Collection of Futures-Oriented Content},
   author={Foresight Institute},
   year={2026},
-  url={https://github.com/foresight/existential-hope-archive}
+  url={https://github.com/foresightinstitute/existential-hope-archive}
 }
 ```
 
