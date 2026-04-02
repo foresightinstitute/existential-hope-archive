@@ -10,9 +10,9 @@ Most serious thinking about technology's future focuses on what could go wrong. 
 
 | Category | Count | Description |
 |----------|-------|-------------|
-| Podcasts | 65 | Full transcripts of the Existential Hope podcast. Conversations with researchers, builders, and thinkers on AI, biotech, governance, longevity, space, and more. |
-| World Gallery | 41 | Speculative scenarios for 2035: structured worldbuilding exercises covering technology, institutions, crises overcome, and transformed sectors |
-| AI Pathways | 2 | Scenario planning reports: d/acc (decentralized, democratic, defensive, differential acceleration) and Tool AI pathways |
+| [Podcasts](https://www.existentialhope.com/podcasts) | 65 | Full transcripts of the Existential Hope podcast. Conversations with researchers, builders, and thinkers on AI, biotech, governance, longevity, space, and more. |
+| [World Gallery](https://worlds.existentialhope.com) | 41 | Speculative scenarios for 2035: structured worldbuilding exercises covering technology, institutions, crises overcome, and transformed sectors |
+| [AI Pathways](https://www.existentialhope.com/ai-pathways) | 2 | Scenario planning reports: d/acc (decentralized, democratic, defensive, differential acceleration) and Tool AI pathways |
 | X-Hope | 1 | Report from the Transformative AI Institution Design Hackathon (Feb 2024, SF) |
 
 Total: ~490,000 words of curated content on technology futures.
