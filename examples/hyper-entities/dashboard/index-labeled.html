@@ -1015,7 +1015,7 @@
         const simulation = d3.forceSimulation(scatterData)
             .force('x', d3.forceX(d => d.targetX).strength(0.3))
             .force('y', d3.forceY(d => d.targetY).strength(0.3))
-            .force('collide', d3.forceCollide(d => d.r + 3).strength(0.9).iterations(8))
+            .force('collide', d3.forceCollide(d => d.r * 1.3 + 3).strength(0.9).iterations(8))
             .force('charge', d3.forceManyBody().strength(-2))
             .stop();
 
@@ -1035,11 +1035,12 @@
                 selectEntity(d.name);
             });
 
-        nodes.append('circle')
+        nodes.append('ellipse')
             .attr('class', 'node')
             .attr('cx', 0)
             .attr('cy', 0)
-            .attr('r', d => d.r)
+            .attr('rx', d => d.r * 1.4)
+            .attr('ry', d => d.r)
             .attr('fill', d => actionColors[d.action] || '#999')
             .attr('stroke', '#ffffff')
             .attr('stroke-width', 1.5)
@@ -1060,7 +1061,7 @@
 
             d.lines.forEach((line, i) => {
                 // Truncate line to fit circle diameter
-                const maxChars = Math.floor((d.r * 1.6) / (d.fontSize * 0.55));
+                const maxChars = Math.floor((d.r * 2.2) / (d.fontSize * 0.55));
                 const truncated = line.length > maxChars ? line.slice(0, maxChars - 1) + '…' : line;
                 text.append('tspan')
                     .attr('x', 0)
