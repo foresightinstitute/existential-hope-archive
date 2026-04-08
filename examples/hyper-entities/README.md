@@ -11,7 +11,7 @@ Which technologies could help build the best possible future but aren't getting 
 
 ## Explore
 
-**[Interactive dashboard](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/index-labeled.html)** — Scatter plot visualization (d/acc alignment vs. transformative potential), filtering by group and action type, and detailed entity cards.
+**[Interactive dashboard](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/)** — Scatter plot visualization (d/acc alignment vs. transformative potential), filtering by group and action type, and detailed entity cards.
 
 **Scored dataset:** `data/curated.json` contains all 189 entities with full scoring, research data, and tier assignments.
 
