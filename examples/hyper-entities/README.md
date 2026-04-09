@@ -4,7 +4,7 @@ Which technologies could help build the best possible future but aren't getting 
 
 ## Results
 
-- **189 hyper-entity candidates** extracted from 109 Existential Hope sources
+- **188 hyper-entity candidates** extracted from 109 Existential Hope sources
 - **19 Tier 1 spotlight entities** selected for deep analysis
 - **170 Tier 2 watch list entities** catalogued with scores
 - **12 thematic groups** identified through clustering
@@ -13,7 +13,7 @@ Which technologies could help build the best possible future but aren't getting 
 
 **[Interactive dashboard](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/)** — Scatter plot visualization (d/acc alignment vs. transformative potential), filtering by group and action type, and detailed entity cards.
 
-**Scored dataset:** `data/curated.json` contains all 189 entities with full scoring, research data, and tier assignments.
+**Scored dataset:** `data/curated.json` contains all 188 entities with full scoring, research data, and tier assignments.
 
 ## Scoring Dimensions
 
@@ -43,4 +43,4 @@ To run this pipeline on the archive data (or your own sources), you'll need:
 - Python 3.10+
 - The `anthropic` Python SDK
 
-Adapt the prompts in [PROMPTS.md](PROMPTS.md) to your use case. The pipeline cost approximately $17 in API calls for the full 189-entity run.
+Adapt the prompts in [PROMPTS.md](PROMPTS.md) to your use case. The pipeline cost approximately $17 in API calls for the full 188-entity run.

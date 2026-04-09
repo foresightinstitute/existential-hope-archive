@@ -49,7 +49,7 @@ Two reasons this matters:
 
 ## Examples
 
-**[Hyper-Entities Analysis](examples/hyper-entities/)** — Which technologies could help build the best possible future but aren't getting the attention they deserve? We used an LLM pipeline to scan the archive, extract 189 candidates, and narrow to 10 that we think are high-impact but under-resourced. Includes full prompt documentation so you can reproduce or adapt the pipeline. [Explore the interactive dashboard.](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/)
+**[Hyper-Entities Analysis](examples/hyper-entities/)** — Which technologies could help build the best possible future but aren't getting the attention they deserve? We used an LLM pipeline to scan the archive, extract 188 candidates, and narrow to 10 that we think are high-impact but under-resourced. Includes full prompt documentation so you can reproduce or adapt the pipeline. [Explore the interactive dashboard.](https://foresightinstitute.github.io/existential-hope-archive/examples/hyper-entities/dashboard/)
 
 ## Citation
 
