@@ -274,7 +274,7 @@ Barriers: {barriers}
 
 ### B. Actionability
 - **readiness_bottleneck**: What is the SINGLE biggest barrier? One of: Physics, Engineering, Funding, Regulation, Coordination, Social Acceptance
-- **what_to_do_now**: What should someone do TODAY? One of: Fund, Build, Research, Advocate, Convene, Nothing Yet
+- **what_to_do_now**: What should someone do TODAY? One of: Build, Research, Advocate, Convene, Nothing Yet
 - **foresight_connection**: How prominently discussed in source material? (0=barely mentioned, 1=mentioned in passing, 2=substantively discussed, 3=central focus)
 
 ### C. Transformative potential (0-5)
@@ -300,7 +300,7 @@ Return ONLY a JSON object with this structure:
   },
   "actionability": {
     "readiness_bottleneck": "Physics|Engineering|Funding|Regulation|Coordination|Social Acceptance",
-    "what_to_do_now": "Fund|Build|Research|Advocate|Convene|Nothing Yet",
+    "what_to_do_now": "Build|Research|Advocate|Convene|Nothing Yet",
     "foresight_connection": "<0-3>"
   },
   "transformative": {
